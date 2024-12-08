@@ -1,0 +1,12 @@
+baseURL = "https://fujimotowrites.com/"
+languageCode = "en-us"
+title = "Fujimoto Writes"
+
+[taxonomies]
+tag = "tags"
+
+[[module.imports]]
+path = "github.com/funkydan2/hugo-kiera"
+
+[params]
+disableDarkModeCSS = true
