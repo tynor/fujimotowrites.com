@@ -1,6 +1,6 @@
 +++
 title = "Holidays 2024"
-date = 2024-02-02T01:00:00-08:00
+date = 2024-12-07T01:00:00-08:00
 draft = false
 tags = ["holidays"]
 +++
