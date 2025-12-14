@@ -1,0 +1,101 @@
+{{- $path := .path -}}
+{{- $variant := or .variant "none" -}}
+{{- $width := .width -}}
+{{- $long := .long -}}
+{{- $alt := .alt -}}
+{{- $page := .Page -}}
+{{- $extraAttrs := .extraAttrs -}}
+
+{{- $q := 80 -}}
+
+{{- $src := false -}}
+{{- $fullSrc := false -}}
+{{- $srcset := slice -}}
+{{- $cls := slice "lightbox-trigger" -}}
+{{- $targetWidth := 0 -}}
+{{- $targetHeight := 0 -}}
+{{- with or ($page.Resources.Get $path) (resources.Get $path) -}}
+  {{- $u := urls.Parse .RelPermalink -}}
+  {{- $path := $u.Path -}}
+  {{- $pathDir := path.Dir $path -}}
+  {{- $pathBase := path.BaseName $path -}}
+
+  {{- if eq $variant "left" -}}
+    {{- $cls = $cls | append "float-left" -}}
+  {{- else if eq $variant "right" -}}
+    {{- $cls = $cls | append "float-right" -}}
+  {{- end -}}
+
+  {{- if $long -}}
+    {{- if ge .Width .Height -}}
+      {{- $targetWidth = cast.ToInt $long -}}
+    {{- else -}}
+      {{- $targetHeight = cast.ToInt $long -}}
+    {{- end -}}
+  {{- else -}}
+    {{- if $width -}}
+      {{- $targetWidth = cast.ToInt $width -}}
+    {{- else -}}
+      {{- $targetWidth = .Width -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if and $targetWidth (not $targetHeight) -}}
+    {{- $aspect := div (cast.ToFloat .Height) (cast.ToFloat .Width) -}}
+    {{- $targetHeight = mul $targetWidth $aspect | math.Round | cast.ToInt -}}
+  {{- else if and (not $targetWidth) $targetHeight -}}
+    {{- $aspect := div (cast.ToFloat .Width) (cast.ToFloat .Height) -}}
+    {{- $targetWidth = mul $targetHeight $aspect | math.Round | cast.ToInt -}}
+  {{- end -}}
+
+  {{- $defaultWidth := .Width -}}
+
+  {{- if $targetWidth -}}
+    {{- $defaultWidth = $targetWidth -}}
+
+    {{- $width3x := mul $targetWidth 3 -}}
+    {{- if gt .Width $width3x -}}
+      {{- $path := path.Join $pathDir (add $pathBase "@3x.webp") -}}
+      {{- with resources.Copy $path . -}}
+        {{- with .Process (printf "resize %dx webp q%d" $width3x $q) -}}
+          {{- $srcset = $srcset | append (printf "%s %dw" .RelPermalink $width3x) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $width2x := mul $targetWidth 2 -}}
+    {{- if gt .Width $width2x -}}
+      {{- $path := path.Join $pathDir (add $pathBase "@2x.webp") -}}
+      {{- with resources.Copy $path . -}}
+        {{- with .Process (printf "resize %dx webp q%d" $width2x $q) -}}
+          {{- $srcset = $srcset | append (printf "%s %dw" .RelPermalink $width2x) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $path := path.Join $pathDir (add $pathBase ".webp") -}}
+  {{- with resources.Copy $path . -}}
+    {{- with .Process (printf "resize %dx webp q%d" $defaultWidth $q) -}}
+      {{- if $srcset -}}
+        {{- $srcset = $srcset | append (printf "%s %dw" .RelPermalink $defaultWidth) -}}
+      {{- end -}}
+      {{- $src = .RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $fullPath := path.Join $pathDir (add $pathBase "-full.webp") -}}
+  {{- with resources.Copy $fullPath . -}}
+    {{- with .Process (printf "webp q%d" $q) -}}
+      {{- $fullSrc = .RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $src }}" alt="{{ .alt }}"
+     width="{{ $targetWidth }}"
+     height="{{ $targetHeight }}"
+     data-full="{{ $fullSrc }}"
+  {{- if $cls }} class="{{ delimit $cls " " }}"{{- end -}}
+  {{- if $srcset -}} srcset="{{ delimit $srcset ", " }}"{{- end -}}
+  {{- if $extraAttrs -}} {{ $extraAttrs | safe.HTMLAttr }}{{- end -}}
+>

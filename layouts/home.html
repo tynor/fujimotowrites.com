@@ -1,0 +1,29 @@
+{{ define "main" }}
+
+<main>
+  <ul>
+    {{ $posts := where site.RegularPages "Type" "posts" }}
+    {{ $paginator := .Paginate $posts }}
+    <stack-l space="var(--s2)">
+    {{ range $index, $post := $paginator.Pages }}
+      <li class="clear">
+        <stack-l>
+          <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+          <div>
+            <stack-l>
+              {{ .Summary }}
+              {{ if .Truncated }}
+                <p>
+                  <a href="{{ .RelPermalink }}">Read more&#8230;</a>
+                </p>
+              {{ end }}
+            </stack-l>
+          </div>
+        </stack-l>
+      </li>
+    {{ end }}
+    </stack-l>
+  </ul>
+</main>
+
+{{ end }}
