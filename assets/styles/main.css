@@ -1,0 +1,156 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+:root {
+  --measure: 66ch;
+
+  --ratio: 1.5;
+  --s-5: calc(var(--s-4) / var(--ratio));
+  --s-4: calc(var(--s-3) / var(--ratio));
+  --s-3: calc(var(--s-2) / var(--ratio));
+  --s-2: calc(var(--s-1) / var(--ratio));
+  --s-1: calc(var(--s0) / var(--ratio));
+  --s0: 1rem;
+  --s1: calc(var(--s0) * var(--ratio));
+  --s2: calc(var(--s1) * var(--ratio));
+  --s3: calc(var(--s2) * var(--ratio));
+  --s4: calc(var(--s3) * var(--ratio));
+  --s5: calc(var(--s4) * var(--ratio));
+
+  --fg: #1a1a1a;
+  --bg: #f7f3ef;
+}
+
+* {
+  max-inline-size: var(--measure);
+}
+
+html, body, div, header, nav, main, footer {
+  max-inline-size: none;
+}
+
+html {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji';
+  color: var(--fg);
+  background-color: var(--bg);
+}
+
+a {
+  color: inherit;
+}
+
+body > stack-l {
+  max-width: 100%;
+}
+
+body {
+  padding: 1rem;
+}
+
+.site-title {
+  font-size: var(--s3);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.clear {
+  clear: both;
+}
+
+img.float-left {
+  float: left;
+  margin-right: 1em;
+}
+
+img.float-right {
+  float: right;
+  margin-left: 1em;
+}
+
+ul {
+  list-style: none;
+}
+
+.gallery-card {
+  width: 300px;
+}
+
+.gallery-card .credit {
+  font-size: var(--s-1);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.lightbox:not(.hidden) {
+  opacity: 1;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-img {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 0 20x rgba(0, 0, 0, 0.6);
+}
+
+.hidden {
+  pointer-events: none;
+  opacity: 0;
+}

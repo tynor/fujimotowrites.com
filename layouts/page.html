@@ -1,0 +1,45 @@
+{{ define "extra-head" }}
+  {{- with resources.Get "scripts/main.js" -}}
+    <script type="module" src="{{ .RelPermalink }}"></script>
+  {{- end -}}
+{{ end }}
+
+{{ define "main" }}
+{{- $page := . -}}
+<stack-l>
+  <main>
+    <h1>{{ .Title }}</h1>
+    <stack-l role="main">
+    {{ .Content }}
+    </stack-l>
+  </main>
+  {{- with .Params.gallery -}}
+  <hr>
+  <cluster-l>
+    {{- range . -}}
+      <div class="gallery-card">
+        <stack-l space="var(--s-1)">
+          {{- partial "image.html" (dict
+            "path" .path
+            "alt" .alt
+            "Page" $page
+            "long" 250
+            "extraAttrs" "loading=lazy"
+          ) -}}
+          {{- with .description -}}
+            <p>{{ . }}</p>
+          {{- end -}}
+          {{- with .credit -}}
+            <p class="credit">Credit: {{ . | markdownify }}</p>
+          {{- end -}}
+        </stack-l>
+      </div>
+    {{- end -}}
+  </cluster-l>
+  {{- end -}}
+</stack-l>
+<div class="lightbox hidden">
+  <div class="lightbox-backdrop"></div>
+  <img class="lightbox-img">
+</div>
+{{ end }}

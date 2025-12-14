@@ -1,10 +1,9 @@
 baseURL = "https://fujimotowrites.com/"
 languageCode = "en-us"
 title = "Fujimoto Writes"
-theme = ["hugo-kiera"]
 
 [taxonomies]
 tag = "tags"
 
 [params]
-disableDarkModeCSS = true
+description = "The Fujimotos' blog"

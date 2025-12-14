@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  {{ if .Site.Params.description }}
+  <meta name="description" content="{{ .Site.Params.description }}">
+  {{ end }}
+  <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAADs=">
+
+  <title>
+    {{ if and (not .IsHome) .Title }}
+      {{ .Params.Title }} -
+    {{ end }}
+    {{ .Site.Title }}
+  </title>
+
+  {{ if hugo.IsDevelopment }}
+    {{ with resources.Get "styles/main.css" }}
+    <link href="{{ .RelPermalink }}" rel="stylesheet">
+    {{ end }}
+    {{ range resources.Match "layouts/*/*.css" }}
+    <link href="{{ .RelPermalink }}" rel="stylesheet">
+    {{ end }}
+    {{ range resources.Match "layouts/*/*.js" }}
+    <script type="module" src="{{ .RelPermalink }}"></script>
+    {{ end }}
+  {{ else }}
+    {{ $layoutStyles := resources.Match "layouts/*/*.css" }}
+    {{ $mainStyles := resources.Get "styles/main.css" }}
+    {{ $css := $layoutStyles |
+      append $mainStyles |
+      collections.Reverse |
+      resources.Concat "all.css" |
+      minify |
+      fingerprint }}
+    <link
+      href="{{ $css.RelPermalink }}"
+      integrity="{{ $css.Data.Integrity }}"
+      rel="stylesheet">
+
+    {{ $js := resources.Match "layouts/*/*.js" |
+      resources.Concat "all.js" |
+      minify |
+      fingerprint }}
+    <script
+      type="module"
+      src="{{ $js.RelPermalink }}"
+      integrity="{{ $js.Data.Integrity }}"></script>
+  {{ end }}
+  {{ block "extra-head" . }}
+  {{ end }}
+</head>
+<body>
+  <stack-l space="var(--s2)">
+    <header>
+      <center-l andText=true>
+        <a class="site-title" href="{{ .Site.Home.RelPermalink }}">
+          {{ .Site.Title }}
+        </a>
+      </center-l>
+    </header>
+    <center-l>
+      {{ block "main" . }}
+      {{ end }}
+    </center-l>
+  </stack-l>
+</body>
+</html>

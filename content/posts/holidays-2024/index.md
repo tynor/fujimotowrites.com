@@ -18,7 +18,12 @@ A few days after the excitement of the wedding, we took our honeymoon at
 Poipu on Kauai island, Hawaii.
 It was blissful to relax in pools and have divine dining experiences.
 
-![Dancing the Cha Cha](dance1.jpeg#float)
+{{< image
+    path="dance1.jpeg"
+    width=250
+    variant="left"
+    alt="Mallory and Tynor dancing the cha cha" >}}
+
 Our passion for ballroom dance grew over the course of the year,
 crescendoing in October when we participated in our first competition:
 Summit DanceSport about 20 miles south of us.
