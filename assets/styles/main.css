@@ -112,6 +112,7 @@ img.float-right {
 
 ul {
   list-style: none;
+  padding-inline: 0;
 }
 
 .gallery-card {
