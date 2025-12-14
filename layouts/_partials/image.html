@@ -21,9 +21,9 @@
   {{- $pathBase := path.BaseName $path -}}
 
   {{- if eq $variant "left" -}}
-    {{- $cls = $cls | append "float-left" -}}
+    {{- $cls = $cls | append "float" "float-left" -}}
   {{- else if eq $variant "right" -}}
-    {{- $cls = $cls | append "float-right" -}}
+    {{- $cls = $cls | append "float" "float-right" -}}
   {{- end -}}
 
   {{- if $long -}}
