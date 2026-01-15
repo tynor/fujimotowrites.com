@@ -194,6 +194,6 @@ her husband Joe, and their two kids, Noah and Liam in Houston.
 Mallory received a well-earned promotion to Scientist at Pfizer and
 continues to work in cancer research.
 
-We hope everyone had a wonderful 2024 and we are excited to see what
-2025 has to offer.
+We hope everyone had a wonderful 2025 and we are excited to see what
+2026 has to offer.
 Happy new year!
