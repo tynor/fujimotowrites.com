@@ -34,4 +34,4 @@ jobs:
           accountId: 50ff5461e14fe0f221c8d33b9b0b746a
           projectName: fujimotowrites
           directory: ./public
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
