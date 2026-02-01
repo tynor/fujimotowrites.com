@@ -1,4 +1,4 @@
-name: GitHub Pages
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: hugo --minify
 
-      - name: Deploy to Cloudflare Pages
+      - name: Upload
         uses: cloudflare/pages-action@1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
