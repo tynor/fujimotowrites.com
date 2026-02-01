@@ -12,6 +12,7 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     permissions:
       contents: write
+      deployments: write
     steps:
       - uses: actions/checkout@v4
         with:
