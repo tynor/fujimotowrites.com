@@ -27,11 +27,11 @@ jobs:
       - name: Build
         run: hugo --minify
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        if: github.ref == 'refs/heads/master'
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@1
         with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 50ff5461e14fe0f221c8d33b9b0b746a
+          projectName: fujimotowrites
+          directory: ./public
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          cname: fujimotowrites.com
-          allow_empty_commit: true
